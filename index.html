@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trampa de la Inflación | Análisis</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #07130f;
+      --bg-card: rgba(10, 26, 20, 0.78);
+      --border: rgba(255, 255, 255, 0.10);
+      --text-main: #f3f7f5;
+      --text-soft: #b8c9c1;
+      --green: #2ecc71;
+      --green-2: #17b26a;
+      --gold: #f5c542;
+      --gold-2: #d4a62a;
+      --accent: #7bdcb5;
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-main);
+      background:
+        radial-gradient(circle at top, rgba(47, 163, 104, 0.20), transparent 28%),
+        radial-gradient(circle at 20% 20%, rgba(245, 197, 66, 0.14), transparent 22%),
+        linear-gradient(180deg, #04110d 0%, #061612 45%, #03100c 100%);
+      min-height: 100vh;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 5rem 0 3rem;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(8, 24, 18, 0.85), rgba(7, 19, 15, 0.60));
+      backdrop-filter: blur(12px);
+    }
+
+    .hero::before,
+    .hero::after {
+      content: '';
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(20px);
+      opacity: 0.6;
+    }
+
+    .hero::before {
+      width: 260px;
+      height: 260px;
+      background: rgba(46, 204, 113, 0.18);
+      top: -80px;
+      right: -40px;
+    }
+
+    .hero::after {
+      width: 180px;
+      height: 180px;
+      background: rgba(245, 197, 66, 0.14);
+      bottom: -50px;
+      left: -30px;
+    }
+
+    .badge-soft {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .55rem .9rem;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: .2px;
+      backdrop-filter: blur(10px);
+    }
+
+    h1, h2, h3, .display-font {
+      font-family: 'Merriweather', serif;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.3rem, 4vw, 4.4rem);
+      line-height: 1.08;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero p.lead {
+      color: var(--text-soft);
+      max-width: 760px;
+      font-size: 1.08rem;
+    }
+
+    .glass-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .section-title {
+      font-size: 1.7rem;
+      margin-bottom: .35rem;
+    }
+
+    .section-subtitle {
+      color: var(--text-soft);
+      margin-bottom: 1.4rem;
+    }
+
+    .topic-card {
+      height: 100%;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.09);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+      transition: transform .25s ease, border-color .25s ease;
+    }
+
+    .topic-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(123, 220, 181, 0.35);
+    }
+
+    .icon-box {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(46, 204, 113, 0.16), rgba(245, 197, 66, 0.14));
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--gold);
+      font-size: 1.45rem;
+    }
+
+    .answer-box {
+      border-left: 4px solid var(--green);
+      padding: 1.15rem 1.2rem;
+      background: rgba(255,255,255,0.04);
+      border-radius: 16px;
+      color: #eaf3ee;
+      line-height: 1.8;
+    }
+
+    .answer-box strong {
+      color: #ffffff;
+    }
+
+    .kpi {
+      padding: 1rem 1.1rem;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .kpi .label {
+      font-size: .85rem;
+      color: var(--text-soft);
+      margin-bottom: .25rem;
+    }
+
+    .kpi .value {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .accent-line {
+      height: 4px;
+      width: 120px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--green), var(--gold));
+      margin: 1rem 0 1.2rem;
+    }
+
+    .footer-note {
+      color: var(--text-soft);
+      font-size: .95rem;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: .35rem .7rem;
+      border-radius: 999px;
+      background: rgba(46, 204, 113, 0.12);
+      color: #9be7c0;
+      border: 1px solid rgba(46, 204, 113, 0.18);
+      font-size: .85rem;
+      font-weight: 600;
+    }
+
+    .highlight {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    ul.clean-list {
+      padding-left: 1.1rem;
+      margin-bottom: 0;
+      color: #e8f0eb;
+      line-height: 1.8;
+    }
+
+    .note-banner {
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(46, 204, 113, 0.12), rgba(245, 197, 66, 0.10));
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 1rem 1.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="container position-relative">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+          <span class="badge-soft mb-3"><i class="bi bi-currency-exchange"></i> Economía • Inflación • Política Monetaria</span>
+          <h1>La trampa de la inflación</h1>
+          <p class="lead mb-0">
+            Una explicación clara y completa sobre quién se beneficia en el corto plazo, quién paga los costos en el largo plazo,
+            y qué reglas institucionales pueden ayudar a evitar que la inflación se convierta en una estrategia recurrente de financiamiento.
+          </p>
+        </div>
+        <div class="col-lg-4">
+          <div class="glass-card p-4">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <div class="icon-box"><i class="bi bi-graph-up-arrow"></i></div>
+              <div>
+                <div class="fw-semibold">Tema central</div>
+                <div class="text-white-50">Beneficios inmediatos, costos diferidos</div>
+              </div>
+            </div>
+            <div class="kpi mb-3">
+              <div class="label">Idea principal</div>
+              <div class="value">La inflación puede ser útil hoy, pero costosa mañana.</div>
+            </div>
+            <div class="kpi">
+              <div class="label">Enfoque</div>
+              <div class="value">Análisis de corto plazo, largo plazo y diseño institucional.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-5">
+
+    <section class="mb-4">
+      <div class="glass-card p-4 p-md-5">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+          <div>
+            <span class="pill mb-3 d-inline-block"><i class="bi bi-people me-1"></i> Integrantes del grupo</span>
+            <h2 class="section-title mb-0">José Tanchez · Gian Robelo · Juan Letona · Joseph Monroy</h2>
+            <div class="accent-line"></div>
+            <p class="section-subtitle mb-0">Presentación grupal sobre la trampa de la inflación y sus implicaciones institucionales.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-5">
+      <div class="glass-card p-4 p-md-5">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+          <div>
+            <h2 class="section-title mb-0">Preguntas de análisis</h2>
+            <div class="accent-line"></div>
+            <p class="section-subtitle mb-0">
+              Respuestas redactadas de forma clara, extensa y lista para exponer en clase.
+            </p>
+          </div>
+          <span class="pill"><i class="bi bi-piggy-bank me-1"></i> Tema de dinero y estabilidad</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-4">
+      <div class="glass-card p-4 p-md-5">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <div class="icon-box"><i class="bi bi-shield-lock"></i></div>
+          <div>
+            <h2 class="section-title mb-1">Propuesta de regla constitucional</h2>
+            <span class="text-white-50">Un límite institucional para evitar el uso oportunista de la inflación</span>
+          </div>
+        </div>
+        <div class="answer-box">
+          <p class="mb-3">
+            Una regla constitucional útil sería establecer que <strong>el Estado no pueda financiar gasto corriente con emisión monetaria</strong> y que cualquier aumento del déficit fiscal
+            requiera una justificación extraordinaria, aprobación reforzada del Congreso y un plan obligatorio de corrección en un plazo definido. Con esto se reduce la posibilidad de que
+            el gobierno traslade hoy el costo a toda la sociedad mediante inflación futura.
+          </p>
+          <p class="mb-3">
+            Además, la Constitución podría fijar un <strong>tope estructural al déficit</strong> y prohibir que el banco central adquiera deuda pública de forma directa. Si el gobierno desea gastar más,
+            debe explicar el origen de los recursos, someterse al control legislativo y asumir el costo político de sus decisiones. Así se evita que el financiamiento inflacionario se convierta en una salida fácil.
+          </p>
+          <p class="mb-0">
+            También conviene incluir una cláusula de <strong>transparencia fiscal</strong>, con informes públicos periódicos, auditoría independiente y mecanismos automáticos de corrección si se incumplen las metas.
+            La idea es que las reglas hagan más difícil el abuso, no solo que prometan disciplina. Cuando el diseño institucional eleva el costo de desviar recursos hacia el presente,
+            disminuye el incentivo para usar la inflación como atajo político.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="row g-4 mb-4">
+      <div class="col-12 col-lg-4">
+        <div class="topic-card p-4">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="icon-box"><i class="bi bi-people-fill"></i></div>
+            <div>
+              <h3 class="h5 mb-1">1. Beneficio de corto plazo</h3>
+              <small class="text-white-50">¿Quién gana en el momento inmediato?</small>
+            </div>
+          </div>
+          <div class="answer-box">
+            <p class="mb-3">
+              En el corto plazo, los <strong>políticos</strong> y el <strong>gobierno</strong> suelen ser los principales beneficiados por una política inflacionaria.
+              Esto ocurre porque la inflación permite obtener recursos de manera más rápida y menos visible que subir impuestos directamente.
+            </p>
+            <p class="mb-3">
+              Cuando el Estado financia parte de su gasto con emisión de dinero o tolerando una inflación más alta, puede sostener programas,
+              aumentar el gasto público o cubrir déficits sin enfrentar de inmediato el mismo rechazo social que generaría un aumento tributario.
+            </p>
+            <p class="mb-0">
+              Además, la inflación puede dar una <strong>sensación temporal de dinamismo</strong>: suben los precios, suben algunos ingresos nominales
+              y parece que la economía está moviéndose más rápido. Sin embargo, ese efecto es engañoso, porque no siempre representa una mejora real.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="topic-card p-4">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="icon-box"><i class="bi bi-hourglass-split"></i></div>
+            <div>
+              <h3 class="h5 mb-1">2. Costo de largo plazo</h3>
+              <small class="text-white-50">¿Qué ocurre con el paso del tiempo?</small>
+            </div>
+          </div>
+          <div class="answer-box">
+            <p class="mb-3">
+              En el largo plazo, la inflación genera consecuencias negativas importantes. La primera es la <strong>pérdida del poder adquisitivo</strong>:
+              con el mismo salario se puede comprar menos, por lo que las familias sienten que el dinero “rinde” cada vez menos.
+            </p>
+            <p class="mb-3">
+              También aparecen <strong>distorsiones en los precios</strong>. Cuando los precios cambian rápidamente, a empresas y consumidores les resulta más difícil
+              decidir cuánto producir, cuánto invertir o cuánto ahorrar. Esto puede llevar a errores de planificación y a una asignación ineficiente de recursos.
+            </p>
+            <p class="mb-3">
+              Otra consecuencia es el aumento de la <strong>incertidumbre económica</strong>. Si nadie sabe cuánto valdrán los precios dentro de unos meses,
+              la inversión privada se frena, el ahorro pierde atractivo y pueden surgir comportamientos defensivos como comprar dólares, sacar capital o evitar contratos largos.
+            </p>
+            <p class="mb-0">
+              En casos extremos, una inflación persistente puede convertirse en una <strong>espiral inflacionaria</strong> o incluso en hiperinflación,
+              donde la moneda pierde credibilidad y el funcionamiento normal de la economía se deteriora seriamente.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="topic-card p-4">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="icon-box"><i class="bi bi-building-gear"></i></div>
+            <div>
+              <h3 class="h5 mb-1">3. Diseño institucional</h3>
+              <small class="text-white-50">¿Cómo se reduce el problema?</small>
+            </div>
+          </div>
+          <div class="answer-box">
+            <p class="mb-3">
+              Para disminuir esta trampa, se necesitan <strong>reglas claras</strong> que limiten la tentación de usar la inflación como herramienta de corto plazo.
+              El primer elemento es la <strong>independencia del banco central</strong>, para que la política monetaria no esté subordinada a necesidades políticas inmediatas.
+            </p>
+            <p class="mb-3">
+              También ayudan las <strong>metas de inflación</strong> y otras reglas monetarias que orienten a la autoridad a mantener la estabilidad de precios.
+              Cuando existe una meta conocida, los agentes económicos pueden formar expectativas más estables.
+            </p>
+            <p class="mb-3">
+              Otro componente es la <strong>disciplina fiscal</strong>. Si el gobierno controla su déficit y evita gastar por encima de sus posibilidades,
+              reduce la presión para financiarse mediante emisión o inflación.
+            </p>
+            <p class="mb-0">
+              Finalmente, la <strong>transparencia</strong> y la <strong>credibilidad institucional</strong> son esenciales. Cuando la sociedad confía en las reglas,
+              las expectativas se anclan y la inflación pierde fuerza como mecanismo de financiamiento político.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="row g-4 mb-4">
+      <div class="col-12 col-lg-6">
+        <div class="glass-card p-4 p-md-5 h-100">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="icon-box"><i class="bi bi-lightbulb"></i></div>
+            <div>
+              <h2 class="section-title mb-1">Conclusión explicada</h2>
+              <span class="text-white-50">Resumen para decirlo en clase con seguridad</span>
+            </div>
+          </div>
+          <div class="answer-box">
+            <p class="mb-3">
+              La trampa de la inflación consiste en que una política que parece útil en el presente termina generando costos más altos en el futuro.
+              En el corto plazo, el gobierno puede obtener recursos rápidos y evitar decisiones impopulares como subir impuestos o recortar gasto.
+            </p>
+            <p class="mb-3">
+              Pero con el tiempo, esa estrategia debilita el valor del dinero, perjudica a quienes reciben ingresos fijos, castiga el ahorro y vuelve más incierta la actividad económica.
+              En otras palabras, el beneficio es concentrado y momentáneo, mientras que el costo es amplio, persistente y socialmente más injusto.
+            </p>
+            <p class="mb-0">
+              Por eso, la solución no es solo técnica sino también institucional: reglas creíbles, límites al déficit y un banco central independiente ayudan a proteger el valor de la moneda
+              y a evitar que la inflación se use como salida fácil frente a problemas fiscales o políticos.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="glass-card p-4 p-md-5 h-100">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="icon-box"><i class="bi bi-clipboard-check"></i></div>
+            <div>
+              <h2 class="section-title mb-1">Idea central para exposición</h2>
+              <span class="text-white-50">Versión breve pero sólida</span>
+            </div>
+          </div>
+          <div class="note-banner mb-3">
+            <p class="mb-0">
+              <strong>La inflación puede parecer una solución rápida</strong>, pero en realidad actúa como un impuesto oculto que termina afectando más a quienes menos capacidad tienen para protegerse.
+            </p>
+          </div>
+          <ul class="clean-list">
+            <li><strong>Ganan:</strong> gobierno y actores políticos en el corto plazo.</li>
+            <li><strong>Pierden:</strong> consumidores, ahorradores, asalariados y pensionados en el largo plazo.</li>
+            <li><strong>Se reduce el problema con:</strong> independencia del banco central, disciplina fiscal y reglas monetarias claras.</li>
+          </ul>
+          <div class="mt-4 p-3 rounded-4" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);">
+            <div class="fw-semibold mb-1" style="color: var(--gold);">Frase final para presentar</div>
+            <div>
+              <em>“La inflación beneficia a algunos en el presente, pero debilita a toda la sociedad en el futuro.”</em>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="py-3 text-center footer-note">
+    </footer>
+  </main>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
